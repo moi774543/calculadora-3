@@ -1,0 +1,107 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Unidades Químicas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+        }
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Calculadora Química</h2>
+        <select id="calculationType">
+            <option>%m/m</option>
+            <option>%m/v</option>
+            <option>%v/v</option>
+            <option>ppm</option>
+            <option>Molaridad</option>
+            <option>Normalidad</option>
+            <option>Fracción molar</option>
+        </select>
+        <input type="number" id="massSolute" placeholder="⚖️ Masa del soluto (g)">
+        <input type="number" id="massSolution" placeholder="⚗️ Masa solución (g) o Volumen (mL)">
+        <input type="number" id="volumeSolution" placeholder="📏 Volumen solución (L)">
+        <input type="number" id="molarMass" placeholder="🧪 Masa molar (g/mol)">
+        <input type="number" id="molarity" placeholder="🔬 Molaridad (M)">
+        <button onclick="calculate()">✅ Calcular</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            let calculationType = document.getElementById("calculationType").value;
+            let massSolute = parseFloat(document.getElementById("massSolute").value) || 0;
+            let massSolution = parseFloat(document.getElementById("massSolution").value) || 0;
+            let volumeSolution = parseFloat(document.getElementById("volumeSolution").value) || 0;
+            let molarMass = parseFloat(document.getElementById("molarMass").value) || 0;
+            let molarity = parseFloat(document.getElementById("molarity").value) || 0;
+            let res = 0;
+
+            switch (calculationType) {
+                case "%m/m":
+                    res = (massSolute / massSolution) * 100;
+                    break;
+                case "%m/v":
+                    res = (massSolute / volumeSolution) * 100;
+                    break;
+                case "%v/v":
+                    res = (massSolute / volumeSolution) * 100;
+                    break;
+                case "ppm":
+                    res = (massSolute / massSolution) * 1e6;
+                    break;
+                case "Molaridad":
+                    res = massSolute / (molarMass * volumeSolution);
+                    break;
+                case "Normalidad":
+                    res = molarity * molarMass;
+                    break;
+                case "Fracción molar":
+                    res = massSolute / (massSolute + massSolution);
+                    break;
+                default:
+                    res = "Selecciona un tipo de cálculo";
+            }
+            document.getElementById("result").innerText = "📢 Resultado: " + res.toFixed(4);
+        }
+    </script>
+</body>
+</html>
